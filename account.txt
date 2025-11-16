@@ -1,0 +1,5 @@
+user:admin@example.com
+pass:Lengocnduong.2206
+
+user:user@example.com
+pass:Lengocnduong.2206
