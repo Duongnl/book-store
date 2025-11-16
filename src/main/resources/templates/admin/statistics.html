@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base::layout(~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistics</title>
+</head>
+<body>
+<section>
+    <div class="container p-5">
+        <p class="text-center fs-3 mt-4">Statistics</p>
+        <div class="row p-5">
+            <div class="col-md-4 mt-4">
+                <a href="/admin/statistics_year" class="text-decoration-none">
+                    <div class="card card-sh">
+                        <div class="card-body text-center text-primary">
+                            <i class="fa-solid fa-square-poll-vertical fa-3x"></i>
+                            <h4>Statistics By Year</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 mt-4">
+                <a href="/admin/statistics_month" class="text-decoration-none">
+                    <div class="card card-sh">
+                        <div class="card-body text-center text-primary">
+                            <i class="fa-solid fa-square-poll-vertical fa-3x"></i>
+                            <h4>Statistics By Month</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 mt-4">
+                <a href="/admin/statistics_customer" class="text-decoration-none">
+                    <div class="card card-sh">
+                        <div class="card-body text-center text-primary">
+                            <i class="fa-solid fa-square-poll-vertical fa-3x"></i>
+                            <h4>Customer statistics</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 mt-4">
+                <a href="/admin/statistics_product" class="text-decoration-none">
+                    <div class="card card-sh">
+                        <div class="card-body text-center text-primary">
+                            <i class="fa-solid fa-square-poll-vertical fa-3x"></i>
+                            <h4>Product statistics</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
