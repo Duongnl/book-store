@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	th:replace="~{base::layout(~{::section})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+
 <head>
-<meta charset="ISO-8859-1">
-<title>View Details</title>
+	<meta charset="ISO-8859-1">
+	<title>View Details</title>
 </head>
+
 <body>
 	<section>
-		<div class="container card-sh"
-			style="margin-top: 70px; margin-bottom: 100px">
+		<div class="container card-sh" style="margin-top: 70px; margin-bottom: 100px">
 
 			<div class="col-md-12 p-5">
 				<div class="row">
@@ -23,7 +23,7 @@
 
 					</th:block>
 					<div class="col-md-6 text-end">
-						<!-- Thêm debug info -->
+						<!-- Thï¿½m debug info -->
 						<!--
                         <p th:text="${'Image path: ' + product.image}"></p>
                         <p th:text="${'Is URL: ' + product.isImageUrl()}"></p>
@@ -32,17 +32,12 @@
 
 						<!-- Handle both URL and local images -->
 						<img th:if="${product.image != null}"
-							 th:src="${product.isImageUrl()} ? ${product.image} : @{'/img/product_img/' + product.image}"
-							 th:alt="${product.title}"
-							 width="300px"
-							 height="250px">
+							th:src="${product.isImageUrl()} ? ${product.image} : @{'/img/product_img/' + product.image}"
+							th:alt="${product.title}" width="300px" height="250px">
 
 						<!-- Show default image if product.image is null -->
-						<img th:unless="${product.image != null}"
-							 th:src="@{/img/product_img/default-product.jpg}"
-							 alt="Default product image"
-							 width="300px"
-							 height="250px">
+						<img th:unless="${product.image != null}" th:src="@{/img/product_img/default-product.jpg}"
+							alt="Default product image" width="300px" height="250px">
 					</div>
 					<div class="col-md-6">
 
@@ -91,19 +86,18 @@
 
 						<th:block th:if="${product.stock>0}">
 							<th:block th:if="${user==null}">
-								<a href="/signin" class="btn btn-danger col-md-12">Add To
-									Cart</a>
+								<a th:href="@{'/guest/addCart?pid='+${product.id}}" class="btn btn-danger col-md-12">Add To Cart</a>
 							</th:block>
-<!--							UPDATE BY BaoThong-->
+							<!--							UPDATE BY BaoThong-->
 							<th:block th:unless="${user==null}">
 								<th:block th:if="${user.role=='ROLE_USER'}">
-								<a
-									th:href="@{'/user/addCart?pid='+${product.id}+'&uid='+${user.id}}"
-									class="btn btn-danger col-md-12">Add To Cart</a></th:block>
+									<a th:href="@{'/user/addCart?pid='+${product.id}+'&uid='+${user.id}}"
+										class="btn btn-danger col-md-12">Add To Cart</a>
+								</th:block>
 								<th:block th:if="${user.role=='ROLE_ADMIN'}">
-								<a
-										th:href="@{'/admin/addCart?pid='+${product.id}+'&uid='+${user.id}}"
-										class="btn btn-danger col-md-12">Add To Cart</a></th:block>
+									<a th:href="@{'/admin/addCart?pid='+${product.id}+'&uid='+${user.id}}"
+										class="btn btn-danger col-md-12">Add To Cart</a>
+								</th:block>
 							</th:block>
 
 						</th:block>
@@ -121,4 +115,5 @@
 
 	</section>
 </body>
+
 </html>
