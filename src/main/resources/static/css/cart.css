@@ -1,5 +1,6 @@
 /* Custom styles for Cart Page */
 .cart-wrapper {
+    margin-top: 20px;
     background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
     min-height: 100vh;
 }
