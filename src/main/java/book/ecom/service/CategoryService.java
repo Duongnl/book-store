@@ -21,5 +21,8 @@ public interface CategoryService {
 	public List<Category> getAllActiveCategory();
 
 	public Page<Category> getAllCategorPagination(Integer pageNo,Integer pageSize);
+	
+	// Kiểm tra category có products không
+	public boolean isCategoryUsedInAnyProduct(Integer categoryId);
 
 }
