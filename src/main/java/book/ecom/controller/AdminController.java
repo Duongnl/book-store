@@ -144,6 +144,14 @@ public class AdminController {
 
     @GetMapping("/deleteCategory/{id}")
     public String deleteCategory(@PathVariable int id, HttpSession session) {
+        
+        // Kiểm tra category có products không
+        if (categoryService.isCategoryUsedInAnyProduct(id)) {
+            session.setAttribute("errorMsg", 
+                "Không thể xóa loại sản phẩm vì vẫn còn sản phẩm thuộc loại này.");
+            return "redirect:/admin/category";
+        }
+
         Boolean deleteCategory = categoryService.deleteCategory(id);
 
         if (deleteCategory) {
@@ -303,12 +311,22 @@ public class AdminController {
 
     @GetMapping("/deleteProduct/{id}")
     public String deleteProduct(@PathVariable int id, HttpSession session) {
+
+        // 1. Kiểm tra sản phẩm đã xuất hiện trong đơn hàng nào chưa
+        if (orderService.isProductUsedInAnyOrder(id)) {
+            session.setAttribute("errorMsg",
+                    "Không thể xóa sản phẩm vì đã có đơn hàng chứa sản phẩm này.");
+            return "redirect:/admin/products";
+        }
+
+        // 2. Nếu không có đơn hàng nào chứa product này thì cho phép xóa
         Boolean deleteProduct = productService.deleteProduct(id);
         if (deleteProduct) {
             session.setAttribute("succMsg", "Product delete success");
         } else {
             session.setAttribute("errorMsg", "Something wrong on server");
         }
+
         return "redirect:/admin/products";
     }
 

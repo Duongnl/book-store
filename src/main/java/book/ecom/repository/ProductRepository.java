@@ -25,4 +25,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     Page<Product> findByisActiveTrueAndTitleContainingIgnoreCaseOrCategory_NameContainingIgnoreCase(String ch, String ch2,
                                                                                                     Pageable pageable);
+    
+    // Đếm số products thuộc category
+    long countByCategory_Id(Integer categoryId);
 }

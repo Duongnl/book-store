@@ -11,6 +11,7 @@ import org.springframework.util.ObjectUtils;
 
 import book.ecom.model.Category;
 import book.ecom.repository.CategoryRepository;
+import book.ecom.repository.ProductRepository;
 import book.ecom.service.CategoryService;
 
 @Service
@@ -18,6 +19,9 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private ProductRepository productRepository;
 
 	@Override
 	public Category saveCategory(Category category) {
@@ -61,6 +65,12 @@ public class CategoryServiceImpl implements CategoryService {
 	public Page<Category> getAllCategorPagination(Integer pageNo, Integer pageSize) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
 		return categoryRepository.findAll(pageable);
+	}
+	
+	@Override
+	public boolean isCategoryUsedInAnyProduct(Integer categoryId) {
+		long count = productRepository.countByCategory_Id(categoryId);
+		return count > 0;
 	}
 
 }
