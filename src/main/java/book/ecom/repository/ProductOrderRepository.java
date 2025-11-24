@@ -29,6 +29,10 @@ public interface ProductOrderRepository extends JpaRepository<ProductOrder, Inte
             "ORDER BY day")
     List<Object[]> getPriceByDay(@Param("year") int year, @Param("month") int month);
 
+    // ĐẾM số order có chứa product với id cho trước
+    long countByProduct_Id(Integer productId);
+
+
     @Query("SELECT po.user.name AS name, COALESCE(SUM(po.price), 0) AS totalPrice " +
             "FROM ProductOrder po " +
             "WHERE po.orderDate BETWEEN :startDate AND :endDate AND po.status = 'Delivered' " +

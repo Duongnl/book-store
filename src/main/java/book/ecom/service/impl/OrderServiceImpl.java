@@ -111,6 +111,12 @@ public class OrderServiceImpl implements OrderService {
         }
         return null;
     }
+    @Override
+    public boolean isProductUsedInAnyOrder(Integer productId) {
+        long count = orderRepository.countByProduct_Id(productId);
+        return count > 0;
+    }
+
 
     @Override
     public List<ProductOrder> getAllOrders() {
@@ -170,9 +176,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findTopProductsByDateRange(startDate, endDate);
     }
 
-    @Override
     public ProductOrder getOrdersByOrderId(String orderId) {
         return orderRepository.findByOrderId(orderId);
     }
-
 }

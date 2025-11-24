@@ -20,6 +20,8 @@ public interface OrderService {
     //BaoThong
     public ProductOrder updateOrderStatusAdmin(Integer id, String status);
 
+    public boolean isProductUsedInAnyOrder(Integer productId);
+
     public List<ProductOrder> getAllOrders();
 
     public ProductOrder getOrdersByOrderId(String orderId);
