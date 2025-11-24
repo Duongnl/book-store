@@ -10,6 +10,7 @@ import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -101,25 +102,52 @@ public class HomeController {
 	}
 
 	@GetMapping("/products")
-	public String products(Model m, @RequestParam(value = "category", defaultValue = "") String category,
+	public String products(Model m, 
+			@RequestParam(value = "category", defaultValue = "") String category,
 			@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(name = "pageSize", defaultValue = "12") Integer pageSize,
-			@RequestParam(defaultValue = "") String ch) {
+			@RequestParam(defaultValue = "") String ch,
+			@RequestParam(required = false) Double minPrice,
+			@RequestParam(required = false) Double maxPrice) {
 
 		List<Category> categories = categoryService.getAllActiveCategory();
+		// Đếm số lượng sản phẩm theo từng danh mục
+		java.util.Map<String, Integer> categoryProductCount = new java.util.HashMap<>();
+		int sumCategory = 0;
+		for (Category cat : categories) {
+			int count = productService.getAllActiveProducts(cat.getName()).size();
+			categoryProductCount.put(cat.getName(), count);
+			sumCategory += count;
+		}
 		m.addAttribute("paramValue", category);
 		m.addAttribute("categories", categories);
+		m.addAttribute("categoryProductCount", categoryProductCount);
+		m.addAttribute("sumCategory", sumCategory);
+		m.addAttribute("ch", ch);
+		m.addAttribute("minPrice", minPrice);
+		m.addAttribute("maxPrice", maxPrice);
 
-//		List<Product> products = productService.getAllActiveProducts(category);
-//		m.addAttribute("products", products);
 		Page<Product> page = null;
+		
 		if (StringUtils.isEmpty(ch)) {
 			page = productService.getAllActiveProductPagination(pageNo, pageSize, category);
 		} else {
 			page = productService.searchActiveProductPagination(pageNo, pageSize, category, ch);
 		}
-
+		
+		// Apply price filter if provided
 		List<Product> products = page.getContent();
+		if (minPrice != null || maxPrice != null) {
+			products = products.stream()
+				.filter(p -> {
+					double price = p.getDiscountPrice() != null ? p.getDiscountPrice() : p.getPrice();
+					if (minPrice != null && price < minPrice) return false;
+					if (maxPrice != null && price > maxPrice) return false;
+					return true;
+				})
+				.collect(Collectors.toList());
+		}
+		
 		m.addAttribute("products", products);
 		m.addAttribute("productsSize", products.size());
 
@@ -129,10 +157,9 @@ public class HomeController {
 		m.addAttribute("totalPages", page.getTotalPages());
 		m.addAttribute("isFirst", page.isFirst());
 		m.addAttribute("isLast", page.isLast());
-
+		
 		return "product";
 	}
-
 	@GetMapping("/product/{id}")
 	public String product(@PathVariable int id, Model m) {
 		Product productById = productService.getProductById(id);

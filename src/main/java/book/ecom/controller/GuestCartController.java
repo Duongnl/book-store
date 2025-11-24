@@ -31,7 +31,7 @@ public class GuestCartController {
     @GetMapping("/addCart")
     public String addToCart(@RequestParam Integer pid, HttpSession session) {
         cartService.addToSessionCart(pid, session);
-        session.setAttribute("succMsg", "Product added to cart");
+        session.setAttribute("succMsg", "Đã thêm sản phẩm vào giỏ hàng");
         return "redirect:/product/" + pid;
     }
 
@@ -45,6 +45,10 @@ public class GuestCartController {
 
         m.addAttribute("carts", carts);
         m.addAttribute("isGuestCart", true);
+
+        // Add cart count
+        Integer countCart = cartService.getSessionCartCount(session);
+        m.addAttribute("countCart", countCart);
 
         if (!carts.isEmpty()) {
             Double totalOrderPrice = 0.0;
