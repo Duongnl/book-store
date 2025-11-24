@@ -62,12 +62,16 @@ public class HomeController {
 	private CartService cartService;
 
 	@ModelAttribute
-	public void getUserDetails(Principal p, Model m) {
+	public void getUserDetails(Principal p, Model m, HttpSession session) {
 		if (p != null) {
 			String email = p.getName();
 			UserDtls userDtls = userService.getUserByEmail(email);
 			m.addAttribute("user", userDtls);
 			Integer countCart = cartService.getCountCart(userDtls.getId());
+			m.addAttribute("countCart", countCart);
+		} else {
+			// Guest user - show session cart count
+			Integer countCart = cartService.getSessionCartCount(session);
 			m.addAttribute("countCart", countCart);
 		}
 

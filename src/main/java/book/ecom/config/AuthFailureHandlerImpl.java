@@ -3,6 +3,7 @@ package book.ecom.config;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -24,6 +25,7 @@ public class AuthFailureHandlerImpl extends SimpleUrlAuthenticationFailureHandle
 	private UserRepository userRepository;
 
 	@Autowired
+	@Lazy
 	private UserService userService;
 
 	@Override
