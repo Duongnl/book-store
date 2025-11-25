@@ -3,7 +3,7 @@
 	th:replace="~{base::layout(~{::section})}">
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Danh sách người dùng</title>
 </head>
 <body>
 	<section>
@@ -11,8 +11,8 @@
 
 			<div class="card card-sh">
 				<div class="card-header text-center">
-					<p class="fs-4" th:if="${userType==1}">Users</p>
-					<p class="fs-4" th:if="${userType==2}">Admin</p>
+					<p class="fs-4" th:if="${userType==1}">Người dùng</p>
+					<p class="fs-4" th:if="${userType==2}">Quản trị viên</p>
 					<th:block th:if="${session.succMsg}">
 						<p class="text-success fw-bold">[[${session.succMsg}]]</p>
 						<th:block th:text="${@commnServiceImpl.removeSessionMessage()}"></th:block>
@@ -27,14 +27,14 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th scope="col">Sl No</th>
-								<th scope="col">Profile</th>
-								<th scope="col">Name</th>
+								<th scope="col">STT</th>
+								<th scope="col">Ảnh</th>
+								<th scope="col">Họ và tên</th>
 								<th scope="col">Email</th>
-								<th scope="col">Mobile No</th>
-								<th scope="col">Address</th>
-								<th scope="col">Status</th>
-								<th scope="col">Action</th>
+								<th scope="col">Số điện thoại</th>
+								<th scope="col">Địa chỉ</th>
+								<th scope="col">Trạng thái</th>
+								<th scope="col">Hành động</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -46,14 +46,32 @@
 								<td>[[${u.email}]]</td>
 								<td>[[${u.mobileNumber}]]</td>
 								<td>[[${u.address+','+u.city+','+u.state+','+u.pincode}]]</td>
-								<td>[[${u.isEnable}]]</td>
-								<td><a th:href="@{'/admin/updateSts?status=true&id='+${u.id}}+'&type='+${userType}"
-									class="btn btn-sm btn-primary">Active</a> 
-										
-									<a
-									th:href="@{'/admin/updateSts?status=false&id='+${u.id}}+'&type='+${userType}"
-									class="btn btn-sm btn-danger">
-										Inactive</a></td>
+								<td th:text="${u.isEnable} ? 'active' : 'inactive'"></td>
+
+								<td>
+									<!-- Edit always available -->
+												<a th:href="@{/admin/editUser/{id}(id=${u.id},type=${userType})}"
+									   class="btn btn-sm btn-secondary me-1">Sửa</a>
+
+									<!-- If user is active -> show only button to make inactive -->
+									<th:block th:if="${u.isEnable}">
+													 <a th:href="@{/admin/updateSts(status=${false},id=${u.id},type=${userType})}"
+										   class="btn btn-sm btn-warning me-1">Vô hiệu hóa</a>
+									</th:block>
+
+									<!-- If user is inactive -> show only button to make active -->
+									<th:block th:if="${!u.isEnable}">
+													 <a th:href="@{/admin/updateSts(status=${true},id=${u.id},type=${userType})}"
+										   class="btn btn-sm btn-success me-1">Kích hoạt</a>
+									</th:block>
+
+									<!-- Show delete only if user has NO orders -->
+									<th:block th:if="${!hasOrdersMap[u.id]}">
+													 <a th:href="@{/admin/deleteUser/{id}(id=${u.id},type=${userType})}"
+										   onclick="return confirm('Bạn có chắc muốn xóa người dùng này không?');"
+										   class="btn btn-sm btn-danger">Xóa</a>
+									</th:block>
+								</td>
 							</tr>
 
 						</tbody>

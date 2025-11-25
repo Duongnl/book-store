@@ -36,4 +36,19 @@ public interface UserService {
 
 	public Boolean existsEmail(String email);
 
+	List<UserDtls> getAllUsers();
+
+	void resetAttempt(Integer userId);
+
+	UserDtls getUserByResetToken(String token);
+
+	void clearResetToken(UserDtls user);
+
+	boolean updatePassword(UserDtls user, String newPassword); 
+
+	String encodePassword(String plainPassword); 
+
+	public UserDtls getUserById(Integer id);
+
+	public Boolean deleteUser(Integer id);
 }

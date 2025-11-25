@@ -85,29 +85,29 @@
 													</span>
 												</td>
 
-												<!-- Product Details -->
+												<!-- Price -->
 												<td data-label="Sản phẩm">
 													<div class="product-title">[[${o.product.title}]]</div>
 												</td>
 
 												<!-- Price Details -->
 												<td data-label="Chi tiết giá">
-													<div class="price-details">
-														<div class="price-row">
-															<span class="price-label">Số lượng:</span>
-															<span class="price-value">[[${o.quantity}]]</span>
+													<div class="Price-details">
+														<div class="Price-row">
+															<span class="Price-label">Số lượng:</span>
+															<span class="Price-value">[[${o.quantity}]]</span>
 														</div>
-														<div class="price-row">
-															<span class="price-label">Đơn giá:</span>
-															<span class="price-value">
-																<span th:text="${#numbers.formatDecimal(o.price, 0, 'COMMA', 0, 'POINT')}"></span>đ
+														<div class="Price-row">
+															<span class="Price-label">Đơn giá:</span>
+															<span class="Price-value">
+																<span th:text="${#numbers.formatDecimal(o.Price, 0, 'COMMA', 0, 'POINT')}"></span>đ
 															</span>
 														</div>
-														<div class="price-row">
-															<span class="price-label">Tổng tiền:</span>
-															<span class="price-value total-value">
+														<div class="Price-row">
+															<span class="Price-label">Tổng tiền:</span>
+															<span class="Price-value total-value">
 																<span
-																	th:text="${#numbers.formatDecimal(o.quantity * o.price, 0, 'COMMA', 0, 'POINT')}"></span>đ
+																	th:text="${#numbers.formatDecimal(o.quantity * o.Price, 0, 'COMMA', 0, 'POINT')}"></span>đ
 															</span>
 														</div>
 													</div>

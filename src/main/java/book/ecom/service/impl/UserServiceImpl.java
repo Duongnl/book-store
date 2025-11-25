@@ -178,4 +178,68 @@ public class UserServiceImpl implements UserService {
 		return userRepository.existsByEmail(email);
 	}
 
+
+
+	@Override
+	public List<UserDtls> getAllUsers() {
+		return userRepository.findAll();
+	}
+
+	@Override
+	public void resetAttempt(Integer userId) {
+		UserDtls user = userRepository.findById(userId).orElse(null);
+		if (user != null && user.getFailedAttempt() > 0) {
+			user.setFailedAttempt(0);
+			userRepository.save(user);
+		}
+	}
+
+	@Override
+	public UserDtls getUserByResetToken(String token) {
+		return userRepository.findByResetToken(token);
+	}
+
+	@Override
+	public void clearResetToken(UserDtls user) {
+		if (user != null) {
+			user.setResetToken(null);
+			userRepository.save(user);
+		}
+	}
+
+	@Override
+	public boolean updatePassword(UserDtls user, String newPassword) {
+		try {
+			user.setPassword(passwordEncoder.encode(newPassword));
+			userRepository.save(user);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public String encodePassword(String plainPassword) {
+		return passwordEncoder.encode(plainPassword);
+	}
+
+	@Override 
+	public UserDtls getUserById(Integer id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+	@Override
+	public Boolean deleteUser(Integer id) {
+		try {
+			if (userRepository.existsById(id)) {
+				userRepository.deleteById(id);
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 }
