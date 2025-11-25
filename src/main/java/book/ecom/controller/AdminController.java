@@ -363,9 +363,152 @@ public class AdminController {
         } else {
             users = userService.getUsers("ROLE_ADMIN");
         }
+
+        Map<Integer, Boolean> hasOrdersMap = new HashMap<>();
+        for (UserDtls user : users) {
+            List<ProductOrder> orders = orderService.getOrdersByUser(user.getId());
+            hasOrdersMap.put(user.getId(), orders != null && !orders.isEmpty());
+        }
+
         m.addAttribute("userType", type);
         m.addAttribute("users", users);
+        m.addAttribute("hasOrdersMap", hasOrdersMap);
         return "/admin/users";
+    }
+
+    @GetMapping("/addUser")
+    public String loadAddUser(@RequestParam(name = "type", defaultValue = "1") Integer userType, Model m) {
+        m.addAttribute("userType", userType);
+        return "/admin/add_user";
+    }
+
+    @PostMapping("/saveUser")
+    public String saveUser(@ModelAttribute UserDtls user, @RequestParam("file") MultipartFile file, HttpSession session)
+            throws IOException {
+
+        String imageName = file.isEmpty() ? "default.jpg" : file.getOriginalFilename();
+        user.setProfileImage(imageName);
+
+        UserDtls saveUser = null;
+        if ("ROLE_ADMIN".equals(user.getRole())) {
+            saveUser = userService.saveAdmin(user);
+        } else {
+            saveUser = userService.saveUser(user);
+        }
+
+        if (!ObjectUtils.isEmpty(saveUser)) {
+            if (!file.isEmpty()) {
+                File saveFile = new ClassPathResource("static/img").getFile();
+
+                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "profile_img" + File.separator
+                        + file.getOriginalFilename());
+
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            }
+            session.setAttribute("succMsg", "Register successfully");
+        } else {
+            session.setAttribute("errorMsg", "something wrong on server");
+        }
+
+        Integer t = "ROLE_ADMIN".equals(user.getRole()) ? 2 : 1;
+        return "redirect:/admin/addUser?type=" + t;
+    }
+
+    @GetMapping("/editUser/{id}")
+    public String editUser(@PathVariable int id, Model m) {
+        UserDtls u = userService.getUserById(id);
+        m.addAttribute("user", u);
+        Integer type = 1;
+        if (u != null && "ROLE_ADMIN".equals(u.getRole())) {
+            type = 2;
+        }
+        m.addAttribute("userType", type);
+        return "admin/edit_user";
+    }
+
+    @PostMapping("/updateUser")
+    public String updateUser(@ModelAttribute UserDtls user, @RequestParam("file") MultipartFile file,
+                             @RequestParam(name = "newPassword", required = false) String newPassword,
+                             HttpSession session)
+            throws IOException {
+
+        UserDtls old = userService.getUserById(user.getId());
+
+        if (old == null) {
+            session.setAttribute("errorMsg", "User not found");
+            return "redirect:/admin/users?type=1";
+        }
+
+        // update fields (do not change password here)
+        old.setName(user.getName());
+        old.setEmail(user.getEmail());
+        old.setMobileNumber(user.getMobileNumber());
+        old.setAddress(user.getAddress());
+        old.setCity(user.getCity());
+        old.setState(user.getState());
+        old.setPincode(user.getPincode());
+        old.setRole(user.getRole());
+        old.setIsEnable(user.getIsEnable());
+
+        if (!file.isEmpty()) {
+            old.setProfileImage(file.getOriginalFilename());
+        }
+
+        UserDtls updateUser = userService.updateUser(old);
+
+        // If admin provided a new password, update it but don't expose old password
+        if (newPassword != null && newPassword.trim().length() > 0) {
+            boolean pwdOk = userService.updatePassword(old, newPassword);
+            if (pwdOk) {
+                // reload updated user so we have latest state
+                updateUser = userService.getUserById(old.getId());
+            }
+        }
+
+        if (!ObjectUtils.isEmpty(updateUser)) {
+            if (!file.isEmpty()) {
+                File saveFile = new ClassPathResource("static/img").getFile();
+
+                Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + "profile_img" + File.separator
+                        + file.getOriginalFilename());
+
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            }
+            session.setAttribute("succMsg", "User updated successfully");
+        } else {
+            session.setAttribute("errorMsg", "Something wrong on server");
+        }
+
+        Integer t = "ROLE_ADMIN".equals(updateUser.getRole()) ? 2 : 1;
+        return "redirect:/admin/editUser/" + user.getId() + "?type=" + t;
+    }
+
+    @GetMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable int id, HttpSession session) {
+
+        UserDtls u = userService.getUserById(id);
+        if (ObjectUtils.isEmpty(u)) {
+            session.setAttribute("errorMsg", "User not found");
+            return "redirect:/admin/users?type=1";
+        }
+
+        // Prevent deleting if user has orders
+        List<ProductOrder> orders = orderService.getOrdersByUser(id);
+        if (orders != null && !orders.isEmpty()) {
+            session.setAttribute("errorMsg", "Không thể xóa user vì đã có đơn hàng liên quan.");
+            Integer t = "ROLE_ADMIN".equals(u.getRole()) ? 2 : 1;
+            return "redirect:/admin/users?type=" + t;
+        }
+
+        Boolean deleted = userService.deleteUser(id);
+        if (deleted) {
+            session.setAttribute("succMsg", "User delete success");
+        } else {
+            session.setAttribute("errorMsg", "Something wrong on server");
+        }
+
+        Integer t = "ROLE_ADMIN".equals(u.getRole()) ? 2 : 1;
+        return "redirect:/admin/users?type=" + t;
     }
 
     @GetMapping("/updateSts")

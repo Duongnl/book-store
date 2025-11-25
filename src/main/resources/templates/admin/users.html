@@ -46,14 +46,32 @@
 								<td>[[${u.email}]]</td>
 								<td>[[${u.mobileNumber}]]</td>
 								<td>[[${u.address+','+u.city+','+u.state+','+u.pincode}]]</td>
-								<td>[[${u.isEnable}]]</td>
-								<td><a th:href="@{'/admin/updateSts?status=true&id='+${u.id}}+'&type='+${userType}"
-									class="btn btn-sm btn-primary">Active</a> 
-										
-									<a
-									th:href="@{'/admin/updateSts?status=false&id='+${u.id}}+'&type='+${userType}"
-									class="btn btn-sm btn-danger">
-										Inactive</a></td>
+								<td th:text="${u.isEnable} ? 'active' : 'inactive'"></td>
+
+								<td>
+									<!-- Edit always available -->
+												<a th:href="@{/admin/editUser/{id}(id=${u.id},type=${userType})}"
+									   class="btn btn-sm btn-secondary me-1">Edit</a>
+
+									<!-- If user is active -> show only button to make inactive -->
+									<th:block th:if="${u.isEnable}">
+													 <a th:href="@{/admin/updateSts(status=${false},id=${u.id},type=${userType})}"
+										   class="btn btn-sm btn-warning me-1">Inactive</a>
+									</th:block>
+
+									<!-- If user is inactive -> show only button to make active -->
+									<th:block th:if="${!u.isEnable}">
+													 <a th:href="@{/admin/updateSts(status=${true},id=${u.id},type=${userType})}"
+										   class="btn btn-sm btn-success me-1">Active</a>
+									</th:block>
+
+									<!-- Show delete only if user has NO orders -->
+									<th:block th:if="${!hasOrdersMap[u.id]}">
+													 <a th:href="@{/admin/deleteUser/{id}(id=${u.id},type=${userType})}"
+										   onclick="return confirm('Are you sure you want to delete this user?');"
+										   class="btn btn-sm btn-danger">Delete</a>
+									</th:block>
+								</td>
 							</tr>
 
 						</tbody>
