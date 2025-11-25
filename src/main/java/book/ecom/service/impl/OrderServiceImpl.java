@@ -99,6 +99,41 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    @Override
+    public ProductOrder updateOrderQuantity(Integer orderId, Integer newQuantity) {
+        Optional<ProductOrder> opt = orderRepository.findById(orderId);
+        if (!opt.isPresent()) {
+            return null;
+        }
+
+        ProductOrder order = opt.get();
+
+        if (OrderStatus.DELIVERED.getName().equals(order.getStatus()) || OrderStatus.SUCCESS.getName().equals(order.getStatus()) || OrderStatus.CANCEL.getName().equals(order.getStatus())) {
+            return null;
+        }
+
+        if (newQuantity == null || newQuantity <= 0) {
+            return null;
+        }
+
+        Product product = order.getProduct();
+        int currentQty = order.getQuantity();
+        int delta = newQuantity - currentQty;
+
+        if (delta > 0) {
+            if (product.getStock() < delta) {
+                return null; 
+            }
+            product.setStock(product.getStock() - delta);
+        } else if (delta < 0) {
+            product.setStock(product.getStock() - delta);
+        }
+
+        order.setQuantity(newQuantity);
+        productRepository.save(product);
+        return orderRepository.save(order);
+    }
+
     //BaoThong
     @Override
     public ProductOrder updateOrderStatusAdmin(Integer id, String status) {
@@ -178,5 +213,10 @@ public class OrderServiceImpl implements OrderService {
 
     public ProductOrder getOrdersByOrderId(String orderId) {
         return orderRepository.findByOrderId(orderId);
+    }
+
+    @Override
+    public ProductOrder getOrderById(Integer id) {
+        return orderRepository.findById(id).orElse(null);
     }
 }

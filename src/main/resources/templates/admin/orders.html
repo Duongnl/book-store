@@ -167,46 +167,64 @@
                         <tr>
                             <th scope="row">[[${orderDtls.orderId}]]</th>
                             <td>
-                                Name: [[${orderDtls.orderAddress.firstName + ' ' +
-                                orderDtls.orderAddress.lastName}]]<br>
-                                Email: [[${orderDtls.orderAddress.email}]]<br>
-                                Mobno: [[${orderDtls.orderAddress.mobileNo}]]<br>
-                                Address: [[${orderDtls.orderAddress.address}]],
-                                [[${orderDtls.orderAddress.city}]]<br>
-                                State: [[${orderDtls.orderAddress.state}]], [[${orderDtls.orderAddress.pincode}]]
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <img th:if="${orderDtls.product.image != null}"
+                                             th:src="${orderDtls.product.isImageUrl()} ? ${orderDtls.product.image} : @{'/img/product_img/' + ${orderDtls.product.image}}"
+                                             width="80" height="80" style="object-fit:cover;border-radius:8px;" />
+                                        <img th:unless="${orderDtls.product.image != null}"
+                                             th:src="@{/img/product_img/default-product.jpg}" width="80" height="80" style="object-fit:cover;border-radius:8px;" />
+                                    </div>
+                                    <div>
+                                        <div>Name: [[${orderDtls.orderAddress.firstName + ' ' + orderDtls.orderAddress.lastName}]]</div>
+                                        <div>Email: [[${orderDtls.orderAddress.email}]]</div>
+                                        <div>Mobno: [[${orderDtls.orderAddress.mobileNo}]]</div>
+                                        <div>Address: [[${orderDtls.orderAddress.address}]], [[${orderDtls.orderAddress.city}]]</div>
+                                        <div>State: [[${orderDtls.orderAddress.state}]], [[${orderDtls.orderAddress.pincode}]]</div>
+                                    </div>
+                                </div>
                             </td>
                             <td>[[${orderDtls.orderDate}]]</td>
-                            <td>[[${orderDtls.product.title}]]</td>
                             <td>
-                                Quantity: [[${orderDtls.quantity}]]<br>
-                                Price: [[${orderDtls.price}]]<br>
-                                Total Price: [[${orderDtls.quantity * orderDtls.price}]]
+                                <div class="d-flex align-items-center">
+                                    <div class="me-2">
+                                        <img th:if="${orderDtls.product.image != null}"
+                                             th:src="${orderDtls.product.isImageUrl()} ? ${orderDtls.product.image} : @{'/img/product_img/' + ${orderDtls.product.image}}"
+                                             width="80" height="80" style="object-fit:cover;border-radius:8px;" />
+                                        <img th:unless="${orderDtls.product.image != null}"
+                                             th:src="@{/img/product_img/default-product.jpg}" width="80" height="80" style="object-fit:cover;border-radius:8px;" />
+                                    </div>
+                                    <div>[[${orderDtls.product.title}]]</div>
+                                </div>
+                            </td>
+                            <td>
+                                <div>Quantity: [[${orderDtls.quantity}]]</div>
+                                <div>Price: [[${orderDtls.price}]]</div>
+                                <div>Total Price: [[${orderDtls.quantity * orderDtls.price}]]</div>
                             </td>
                             <td>[[${orderDtls.status}]]</td>
                             <td>
-                                <form action="/admin/update-order-status" method="post">
-                                    <div class="row">
-                                        <div class="col">
-                                            <select class="form-control" name="st"
-                                                    th:disabled="${orderDtls.status == 'Cancelled' || orderDtls.status == 'Delivered'}">
-                                                <option>--select--</option>
-                                                <option value="1">In Progress</option>
-                                                <option value="2">Order Received</option>
-                                                <option value="3">Product Packed</option>
-                                                <option value="4">Out for Delivery</option>
-                                                <option value="5">Delivered</option>
-                                                <option value="6">Cancelled</option>
-                                            </select>
-                                        </div>
-                                        <input th:value="${orderDtls.id}" name="id" type="hidden">
-                                        <div class="col">
-                                            <button
-                                                    class="btn btn-sm btn-primary"
-                                                    type="submit"
-                                                    th:disabled="${orderDtls.status == 'Cancelled' || orderDtls.status == 'Delivered'}">
-                                                Update
-                                            </button>
-                                        </div>
+                                <form action="/admin/update-order-status" method="post" class="mb-2">
+                                    <input type="hidden" name="id" th:value="${orderDtls.id}" />
+                                    <div class="d-flex gap-2">
+                                        <select class="form-control" name="st" th:disabled="${orderDtls.status == 'Cancelled' || orderDtls.status == 'Delivered'}">
+                                            <option>--select--</option>
+                                            <option value="1">In Progress</option>
+                                            <option value="2">Order Received</option>
+                                            <option value="3">Product Packed</option>
+                                            <option value="4">Out for Delivery</option>
+                                            <option value="5">Delivered</option>
+                                            <option value="6">Cancelled</option>
+                                        </select>
+                                        <button class="btn btn-sm btn-primary" type="submit" th:disabled="${orderDtls.status == 'Cancelled' || orderDtls.status == 'Delivered'}">Update</button>
+                                    </div>
+                                </form>
+
+                                <form action="/admin/update-order-quantity" method="post">
+                                    <input type="hidden" name="id" th:value="${orderDtls.id}" />
+                                    <div class="d-flex gap-2 mt-2 align-items-center">
+                                        <input type="number" min="1" name="newQty" class="form-control" th:value="${orderDtls.quantity}" th:disabled="${orderDtls.status == 'Cancelled' || orderDtls.status == 'Delivered' || orderDtls.status == 'Success'}" style="max-width:120px;" />
+                                        <button class="btn btn-sm btn-outline-primary" type="submit" th:disabled="${orderDtls.status == 'Cancelled' || orderDtls.status == 'Delivered' || orderDtls.status == 'Success'}">Update Qty</button>
                                     </div>
                                 </form>
                             </td>
@@ -218,11 +236,20 @@
                 </th:block>
 
                 <!-- All Orders -->
-                <th:block th:unless="${srch}">
+                    <th:block th:unless="${srch}">
                     <tr th:each="o : ${orders}">
-                        <th scope="row">[[${o.orderId}]]</th>
+                        <th scope="row"><a th:href="@{/admin/order/{id}(id=${o.id})}" class="text-decoration-none">[[${o.orderId}]]</a></th>
                         <td>
-                            Name: [[${o.orderAddress.firstName + ' ' + o.orderAddress.lastName}]]<br>
+                            <div class="d-flex align-items-center">
+                                <div class="me-3">
+                                    <img th:if="${o.product.image != null}"
+                                         th:src="${o.product.isImageUrl()} ? ${o.product.image} : @{'/img/product_img/' + ${o.product.image}}"
+                                         width="60" height="60" style="object-fit:cover;border-radius:6px;" />
+                                    <img th:unless="${o.product.image != null}"
+                                         th:src="@{/img/product_img/default-product.jpg}" width="60" height="60" style="object-fit:cover;border-radius:6px;" />
+                                </div>
+                                <div>
+                                    Name: [[${o.orderAddress.firstName + ' ' + o.orderAddress.lastName}]]<br>
                             Email: [[${o.orderAddress.email}]]<br>
                             Mobno: [[${o.orderAddress.mobileNo}]]<br>
                             Address: [[${o.orderAddress.address}]], [[${o.orderAddress.city}]]<br>
@@ -282,8 +309,8 @@
                                 </a></li>
 
                                 <li th:each="i:${#numbers.sequence(1,totalPages)}"
-                                    class="page-item" th:classappend="${pageNo+1==i}?'active':''"
-                                    ]]><a class="page-link"
+                                    class="page-item" th:classappend="${pageNo+1==i}?'active':''">
+                                    <a class="page-link"
                                           th:href="@{'/admin/orders?pageNo='+${i-1}}">[[${i}]]</a></li>
 
                                 <li class="page-item"

@@ -1,6 +1,5 @@
 package book.ecom.service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,6 +16,8 @@ public interface OrderService {
 
     public ProductOrder updateOrderStatus(Integer id, String status);
 
+    public ProductOrder updateOrderQuantity(Integer orderId, Integer newQuantity);
+
     //BaoThong
     public ProductOrder updateOrderStatusAdmin(Integer id, String status);
 
@@ -27,6 +28,8 @@ public interface OrderService {
     public ProductOrder getOrdersByOrderId(String orderId);
 
     public Page<ProductOrder> getAllOrdersPagination(Integer pageNo, Integer pageSize);
+
+    public ProductOrder getOrderById(Integer id);
 
     public List<Object[]> getMonthlySalesByYear(int year);
 

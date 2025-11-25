@@ -543,6 +543,29 @@ public class AdminController {
         return "/admin/orders";
     }
 
+    @GetMapping("/order/{id}")
+    public String viewOrderDetail(@PathVariable Integer id, Model m, HttpSession session) {
+        ProductOrder order = orderService.getOrderById(id);
+        if (order == null) {
+            session.setAttribute("errorMsg", "Order not found");
+            return "redirect:/admin/orders";
+        }
+        m.addAttribute("orderDtls", order);
+        return "/admin/order_detail";
+    }
+
+    @PostMapping("/update-order-quantity")
+    public String updateOrderQuantity(@RequestParam Integer id, @RequestParam Integer newQty, HttpSession session) {
+        ProductOrder updated = orderService.updateOrderQuantity(id, newQty);
+        if (updated == null) {
+            session.setAttribute("errorMsg", "Failed to update quantity (maybe not enough stock or invalid state)");
+        } else {
+            session.setAttribute("succMsg", "Order quantity updated");
+        }
+
+        return "redirect:/admin/order_detail/" + id;
+    }
+
     @PostMapping("/update-order-status")
     public String updateOrderStatus(@RequestParam Integer id, @RequestParam Integer st, HttpSession session) {
 
