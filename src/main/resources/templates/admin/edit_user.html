@@ -3,7 +3,7 @@
       th:replace="~{base::layout(~{::section})}">
 <head>
     <meta charset="UTF-8">
-    <title>Edit User</title>
+    <title>Chỉnh sửa người dùng</title>
     <link rel="stylesheet" th:href="@{/css/admin-style.css}">
     <style>
         .page-header {
@@ -148,14 +148,14 @@
         <div class="page-header text-center">
             <h2 class="mb-0">
                 <i class="fas fa-user-edit me-2"></i>
-                Edit User
+                Chỉnh sửa người dùng
             </h2>
         </div>
 
-        <!-- Back link -->
+        <!-- Quay lại danh sách người dùng -->
         <a th:href="@{/admin/users(type=${userType})}" class="back-link">
             <i class="fas fa-arrow-left"></i>
-            Back to Users List
+            Quay lại danh sách người dùng
         </a>
 
         <div class="row">
@@ -188,7 +188,7 @@
                             <!-- Full Name -->
                             <div class="mb-4">
                                 <label class="form-label icon-label required-field">
-                                    <i class="fas fa-user"></i> Full Name
+                                    <i class="fas fa-user"></i> Họ và tên
                                 </label>
                                 <input type="text" name="name" th:value="${user.name}"
                                        class="form-control" placeholder="Enter full name" required>
@@ -206,7 +206,7 @@
                             <!-- Mobile Number -->
                             <div class="mb-4">
                                 <label class="form-label icon-label required-field">
-                                    <i class="fas fa-phone"></i> Mobile Number
+                                    <i class="fas fa-phone"></i> Số điện thoại
                                 </label>
                                 <input type="text" name="mobileNumber" th:value="${user.mobileNumber}"
                                        class="form-control" placeholder="Enter mobile number" required>
@@ -214,18 +214,18 @@
 
                             <div class="section-divider"></div>
 
-                            <!-- Address Fields -->
+                            <!-- Địa chỉ Fields -->
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label icon-label required-field">
-                                        <i class="fas fa-map-marker-alt"></i> Address
+                                        <i class="fas fa-map-marker-alt"></i> Địa chỉ
                                     </label>
                                     <input type="text" name="address" th:value="${user.address}"
                                            class="form-control" placeholder="Street / House No." required>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label icon-label required-field">
-                                        <i class="fas fa-city"></i> City
+                                        <i class="fas fa-city"></i> Thành phố
                                     </label>
                                     <input type="text" name="city" th:value="${user.city}"
                                            class="form-control" placeholder="City" required>
@@ -235,14 +235,14 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label icon-label required-field">
-                                        <i class="fas fa-globe"></i> State / Province
+                                        <i class="fas fa-globe"></i> Tỉnh / Thành phố
                                     </label>
                                     <input type="text" name="state" th:value="${user.state}"
                                            class="form-control" placeholder="State" required>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label icon-label required-field">
-                                        <i class="fas fa-mail-bulk"></i> Pincode
+                                        <i class="fas fa-mail-bulk"></i> Mã bưu điện
                                     </label>
                                     <input type="text" name="pincode" th:value="${user.pincode}"
                                            class="form-control" placeholder="Pincode / ZIP" required>
@@ -254,21 +254,21 @@
                             <!-- Role (User / Admin) -->
                             <div class="mb-4">
                                 <label class="form-label icon-label required-field">
-                                    <i class="fas fa-user-shield"></i> Role
+                                    <i class="fas fa-user-shield"></i> Vai trò
                                 </label>
                                 <div class="radio-group">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="role" value="ROLE_USER"
                                                th:checked="${user.role == 'ROLE_USER'}" id="roleUser">
                                         <label class="form-check-label" for="roleUser">
-                                            <i class="fas fa-user text-primary"></i> User
+                                            <i class="fas fa-user text-primary"></i> Người dùng
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="role" value="ROLE_ADMIN"
                                                th:checked="${user.role == 'ROLE_ADMIN'}" id="roleAdmin">
                                         <label class="form-check-label" for="roleAdmin">
-                                            <i class="fas fa-user-shield text-warning"></i> Admin
+                                            <i class="fas fa-user-shield text-warning"></i> Quản trị viên
                                         </label>
                                     </div>
                                 </div>
@@ -277,21 +277,21 @@
                             <!-- Account Status -->
                             <div class="mb-4">
                                 <label class="form-label icon-label required-field">
-                                    <i class="fas fa-toggle-on"></i> Account Status
+                                    <i class="fas fa-toggle-on"></i> Trạng thái tài khoản
                                 </label>
                                 <div class="radio-group">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="isEnable" value="true"
                                                th:checked="${user.isEnable}" id="statusActive">
                                         <label class="form-check-label" for="statusActive">
-                                            <i class="fas fa-check-circle text-success"></i> Active
+                                            <i class="fas fa-check-circle text-success"></i> Kích hoạt
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="isEnable" value="false"
                                                th:checked="${!user.isEnable}" id="statusInactive">
                                         <label class="form-check-label" for="statusInactive">
-                                            <i class="fas fa-times-circle text-danger"></i> Inactive
+                                            <i class="fas fa-times-circle text-danger"></i> Vô hiệu hóa
                                         </label>
                                     </div>
                                 </div>
@@ -300,10 +300,10 @@
                             <!-- New Password (Admin can set but cannot view old password) -->
                             <div class="mb-4">
                                 <label class="form-label icon-label">
-                                    <i class="fas fa-lock"></i> New Password
+                                    <i class="fas fa-lock"></i> Mật khẩu mới
                                 </label>
                                 <input type="password" name="newPassword" class="form-control"
-                                       placeholder="Leave blank to keep current password">
+                                       placeholder="Để trống để giữ mật khẩu hiện tại">
                             </div>
 
                             <div class="section-divider"></div>
@@ -311,7 +311,7 @@
                             <!-- Profile Image -->
                             <div class="mb-4">
                                 <label class="form-label icon-label">
-                                    <i class="fas fa-image"></i> Update Profile Image
+                                    <i class="fas fa-image"></i> Cập nhật ảnh đại diện
                                 </label>
                                 <input type="file" name="file" class="form-control" accept="image/*">
                                 <small class="text-muted">
@@ -323,7 +323,7 @@
                             <!-- Current Profile Image -->
                             <div class="image-preview-container mb-4 text-center">
                                 <label class="form-label">
-                                    <i class="fas fa-eye me-2"></i> Current Profile Image
+                                    <i class="fas fa-eye me-2"></i> Ảnh đại diện hiện tại
                                 </label>
                                 <div class="mt-3">
                                     <img th:src="${user.profileImage != null && !user.profileImage.isEmpty()} 
@@ -338,7 +338,7 @@
                             <!-- Submit Button -->
                             <button type="submit" class="btn btn-primary btn-submit col-12 mt-3">
                                 <i class="fas fa-save me-2"></i>
-                                Update User
+                                Cập nhật người dùng
                             </button>
                         </form>
                     </div>

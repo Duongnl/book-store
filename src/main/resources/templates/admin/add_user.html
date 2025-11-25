@@ -3,7 +3,7 @@
       th:replace="~{base::layout(~{::section})}">
 <head>
     <meta charset="UTF-8">
-    <title>Add New User</title>
+    <title>Thêm người dùng mới</title>
     <link rel="stylesheet" th:href="@{/css/admin-style.css}">
     <style>
         .page-header {
@@ -136,14 +136,14 @@
         <div class="page-header text-center">
             <h2 class="mb-0">
                 <i class="fas fa-user-plus me-2"></i>
-                Add New User
+                Thêm người dùng mới
             </h2>
         </div>
 
-        <!-- Back to Users List -->
+        <!-- Quay lại danh sách người dùng -->
         <a th:href="@{/admin/users(type=${userType})}" class="back-link">
             <i class="fas fa-arrow-left"></i>
-            Back to Users List
+            Quay lại danh sách người dùng
         </a>
 
         <div class="row">
@@ -173,9 +173,9 @@
 
                             <!-- Full Name -->
                             <div class="mb-4">
-                                <label class="form-label icon-label required-field">
-                                    <i class="fas fa-user"></i> Full Name
-                                </label>
+                                        <label class="form-label icon-label required-field">
+                                            <i class="fas fa-user"></i> Họ và tên
+                                        </label>
                                 <input type="text" name="name" class="form-control"
                                        placeholder="Enter full name" required>
                             </div>
@@ -192,7 +192,7 @@
                             <!-- Password -->
                             <div class="mb-4">
                                 <label class="form-label icon-label required-field">
-                                    <i class="fas fa-lock"></i> Password
+                                    <i class="fas fa-lock"></i> Mật khẩu
                                 </label>
                                 <input type="password" name="password" class="form-control"
                                        placeholder="Enter strong password" required>
@@ -201,7 +201,7 @@
                             <!-- Mobile Number -->
                             <div class="mb-4">
                                 <label class="form-label icon-label required-field">
-                                    <i class="fas fa-phone"></i> Mobile Number
+                                    <i class="fas fa-phone"></i> Số điện thoại
                                 </label>
                                 <input type="text" name="mobileNumber" class="form-control"
                                        placeholder="0123456789" required>
@@ -209,18 +209,18 @@
 
                             <div class="section-divider"></div>
 
-                            <!-- Address -->
+                            <!-- Địa chỉ -->
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label icon-label required-field">
-                                        <i class="fas fa-map-marker-alt"></i> Address
+                                        <i class="fas fa-map-marker-alt"></i> Địa chỉ
                                     </label>
                                     <input type="text" name="address" class="form-control"
                                            placeholder="Street / House No." required>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label icon-label required-field">
-                                        <i class="fas fa-city"></i> City
+                                        <i class="fas fa-city"></i> Thành phố
                                     </label>
                                     <input type="text" name="city" class="form-control"
                                            placeholder="City" required>
@@ -230,14 +230,14 @@
                             <div class="row">
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label icon-label required-field">
-                                        <i class="fas fa-globe"></i> State / Province
+                                        <i class="fas fa-globe"></i> Tỉnh / Thành phố
                                     </label>
                                     <input type="text" name="state" class="form-control"
                                            placeholder="State" required>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <label class="form-label icon-label required-field">
-                                        <i class="fas fa-mail-bulk"></i> Pincode
+                                        <i class="fas fa-mail-bulk"></i> Mã bưu điện
                                     </label>
                                     <input type="text" name="pincode" class="form-control"
                                            placeholder="700000" required>
@@ -249,21 +249,21 @@
                             <!-- Role -->
                             <div class="mb-4">
                                 <label class="form-label icon-label required-field">
-                                    <i class="fas fa-user-shield"></i> Role
+                                    <i class="fas fa-user-shield"></i> Vai trò
                                 </label>
                                 <div class="radio-group">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="role" value="ROLE_USER"
                                                id="roleUser" checked>
                                         <label class="form-check-label" for="roleUser">
-                                            <i class="fas fa-user text-primary"></i> User
+                                            <i class="fas fa-user text-primary"></i> Người dùng
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="role" value="ROLE_ADMIN"
                                                id="roleAdmin">
                                         <label class="form-check-label" for="roleAdmin">
-                                            <i class="fas fa-user-shield text-warning"></i> Admin
+                                            <i class="fas fa-user-shield text-warning"></i> Quản trị viên
                                         </label>
                                     </div>
                                 </div>
@@ -272,21 +272,21 @@
                             <!-- Account Status -->
                             <div class="mb-4">
                                 <label class="form-label icon-label required-field">
-                                    <i class="fas fa-toggle-on"></i> Account Status
+                                    <i class="fas fa-toggle-on"></i> Trạng thái tài khoản
                                 </label>
                                 <div class="radio-group">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="isEnable" value="true"
                                                id="statusActive" checked>
                                         <label class="form-check-label" for="statusActive">
-                                            <i class="fas fa-check-circle text-success"></i> Active
+                                            <i class="fas fa-check-circle text-success"></i> Kích hoạt
                                         </label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="isEnable" value="false"
                                                id="statusInactive">
                                         <label class="form-check-label" for="statusInactive">
-                                            <i class="fas fa-times-circle text-danger"></i> Inactive
+                                            <i class="fas fa-times-circle text-danger"></i> Vô hiệu hóa
                                         </label>
                                     </div>
                                 </div>
@@ -297,19 +297,19 @@
                             <!-- Profile Image -->
                             <div class="mb-4">
                                 <label class="form-label icon-label">
-                                    <i class="fas fa-image"></i> Profile Image
+                                    <i class="fas fa-image"></i> Ảnh đại diện
                                 </label>
                                 <input type="file" name="file" class="form-control" accept="image/*">
                                 <small class="text-muted">
                                     <i class="fas fa-info-circle me-1"></i>
-                                    Optional – Leave empty to use default avatar
+                                    Không bắt buộc – Để trống để dùng ảnh đại diện mặc định
                                 </small>
                             </div>
 
                             <!-- Submit Button -->
                             <button type="submit" class="btn btn-primary btn-submit col-md-12 mt-3">
                                 <i class="fas fa-save me-2"></i>
-                                Create User
+                                Tạo người dùng
                             </button>
                         </form>
                     </div>

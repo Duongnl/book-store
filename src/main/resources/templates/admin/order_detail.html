@@ -8,7 +8,7 @@
 <body>
 <section>
     <div class="container-fluid mt-4 p-4">
-        <a href="/admin/orders" class="text-decoration-none mb-3 d-inline-block"><i class="fa-solid fa-arrow-left"></i> Back to Orders</a>
+        <a href="/admin/orders" class="text-decoration-none mb-3 d-inline-block"><i class="fa-solid fa-arrow-left"></i> Trở lại Danh sách đơn hàng</a>
 
         <div class="card p-3">
             <div class="row g-3 align-items-start">
@@ -31,19 +31,19 @@
                 <div class="col-md-8">
                     <div class="card p-3">
                         <h4>Delivery Information</h4>
-                        <div class="mb-2">Name: [[${orderDtls.orderAddress.firstName}]] [[${orderDtls.orderAddress.lastName}]]</div>
+                        <div class="mb-2">Tên: [[${orderDtls.orderAddress.firstName}]] [[${orderDtls.orderAddress.lastName}]]</div>
                         <div class="mb-2">Email: [[${orderDtls.orderAddress.email}]]</div>
-                        <div class="mb-2">Phone: [[${orderDtls.orderAddress.mobileNo}]]</div>
-                        <div class="mb-2">Address: [[${orderDtls.orderAddress.address}]], [[${orderDtls.orderAddress.city}]]</div>
-                        <div class="mb-2">State / Pincode: [[${orderDtls.orderAddress.state}]] / [[${orderDtls.orderAddress.pincode}]]</div>
+                        <div class="mb-2">Số điện thoại: [[${orderDtls.orderAddress.mobileNo}]]</div>
+                        <div class="mb-2">Địa chỉ: [[${orderDtls.orderAddress.address}]], [[${orderDtls.orderAddress.city}]]</div>
+                        <div class="mb-2">Tiểu bang / Mã bưu chính: [[${orderDtls.orderAddress.state}]] / [[${orderDtls.orderAddress.pincode}]]</div>
 
                         <hr/>
 
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <div><strong>Quantity:</strong> [[${orderDtls.quantity}]]</div>
-                                <div><strong>Unit Price:</strong> <span th:text="${#numbers.formatDecimal(orderDtls.price,0,'COMMA',0,'POINT')}"></span>đ</div>
-                                <div><strong>Total:</strong> <span th:text="${#numbers.formatDecimal(orderDtls.quantity * orderDtls.price,0,'COMMA',0,'POINT')}"></span>đ</div>
+                                <div><strong>Số lượng: </strong> [[${orderDtls.quantity}]]</div>
+                                <div><strong>Unit Price:</strong> <span th:text="${#numbers.formatDecimal(orderDtls.Price,0,'COMMA',0,'POINT')}"></span>đ</div>
+                                <div><strong>Total:</strong> <span th:text="${#numbers.formatDecimal(orderDtls.quantity * orderDtls.Price,0,'COMMA',0,'POINT')}"></span>đ</div>
                             </div>
 
                             <div class="col-md-6">
@@ -59,7 +59,7 @@
                                             <option value="5">Delivered</option>
                                             <option value="6">Cancelled</option>
                                         </select>
-                                        <button class="btn btn-primary" type="submit">Update Status</button>
+                                        <button class="btn btn-primary" type="submit">Cập nhật trạng thái</button>
                                     </form>
                                 </div>
 
@@ -67,7 +67,7 @@
                                     <form action="/admin/update-order-quantity" method="post" class="d-flex gap-2">
                                         <input type="hidden" name="id" th:value="${orderDtls.id}"/>
                                         <input type="number" min="1" name="newQty" th:value="${orderDtls.quantity}" class="form-control" style="max-width:120px;"/>
-                                        <button type="submit" class="btn btn-outline-primary">Update Qty</button>
+                                        <button type="submit" class="btn btn-outline-primary">Cập nhật số lượng</button>
                                     </form>
                                 </div>
                             </div>
