@@ -82,7 +82,7 @@
     border: none;
     padding: 18px 15px;
     font-weight: 600;
-    color: white;
+    color: #091934ff;
     text-transform: uppercase;
     font-size: 0.85rem;
     letter-spacing: 0.5px;
@@ -95,9 +95,8 @@
 }
 
 .table-orders tbody tr:hover {
-    background: #f8f9ff;
-    transform: scale(1.005);
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+    background: #000000ff;
+    box-shadow: 10px 10px 14px 15px rgba(14, 35, 127, 0.1);
 }
 
 .table-orders tbody td {
