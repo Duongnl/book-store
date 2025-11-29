@@ -33,26 +33,26 @@
                 <th:block th:if="${user==null}">
                     <li class="nav-item"><a class="nav-link active"
                                             aria-current="page" href="/"><i class="fa-solid fa-house"></i>
-                        Home</a></li>
+                        Trang chủ</a></li>
                 </th:block>
 
                 <th:block th:unless="${user==null}">
                     <li class="nav-item" th:if="${user.role=='ROLE_ADMIN'}"><a
                             class="nav-link active" aria-current="page" href="/admin/"><i
-                            class="fa-solid fa-house"></i> Home</a></li>
+                            class="fa-solid fa-house"></i> Trang chủ</a></li>
 
                     <li class="nav-item" th:if="${user.role=='ROLE_USER'}"><a
                             class="nav-link active" aria-current="page" href="/"><i
-                            class="fa-solid fa-house"></i> Home</a></li>
+                            class="fa-solid fa-house"></i> Trang chủ</a></li>
                 </th:block>
 
 
                 <li class="nav-item"><a class="nav-link active"
-                                        aria-current="page" href="/products">Product</a></li>
+                                        aria-current="page" href="/products">Sản phẩm</a></li>
 
                 <li class="nav-item dropdown"><a
                         class="nav-link dropdown-toggle" href="#" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false"> Category </a>
+                        data-bs-toggle="dropdown" aria-expanded="false"> Danh mục </a>
                     <ul class="dropdown-menu">
                         <li th:each="c:${categorys}"><a class="dropdown-item"
                                                         th:href="@{'/products?category='+${c.name}}">[[${c.name}]]</a>
@@ -67,9 +67,9 @@
                 <th:block th:if="${user==null}">
                     <li class="nav-item"><a class="nav-link active"
                                             aria-current="page" href="/signin"><i
-                            class="fa-solid fa-right-to-bracket"></i> LOGIN</a></li>
+                            class="fa-solid fa-right-to-bracket"></i> ĐĂNG NHẬP</a></li>
                     <li class="nav-item"><a class="nav-link active"
-                                            aria-current="page" href="/register">REGISTER</a></li>
+                                            aria-current="page" href="/register">ĐĂNG KÝ</a></li>
 
 
                 </th:block>
@@ -78,13 +78,13 @@
                     <th:block th:if="${user.role=='ROLE_USER'}">
                         <li class="nav-item"><a class="nav-link active"
                                                 aria-current="page" href="/user/cart"><i
-                                class="fa-solid fa-cart-shopping"></i> Cart [ [[${countCart}]]
+                                class="fa-solid fa-cart-shopping"></i> Giỏ hàng [ [[${countCart}]]
                             ]</a></li>
                     </th:block>
                     <th:block th:if="${user.role=='ROLE_ADMIN'}">
                         <li class="nav-item"><a class="nav-link active"
                                                 aria-current="page" href="/admin/cart"><i
-                                class="fa-solid fa-cart-shopping"></i> Cart [ [[${countCart}]]
+                                class="fa-solid fa-cart-shopping"></i> Giỏ hàng [ [[${countCart}]]
                             ]</a></li>
                     </th:block>
                     <li class="nav-item dropdown"><a
@@ -94,17 +94,16 @@
                     </a>
                         <ul class="dropdown-menu">
                             <li th:if="${user.role=='ROLE_USER'}"><a
-                                    class="dropdown-item" href="/user/profile">Profile</a></li>
+                                    class="dropdown-item" href="/user/profile">Hồ sơ</a></li>
 
                             <li th:if="${user.role=='ROLE_ADMIN'}"><a
-                                    class="dropdown-item" href="/admin/profile">Profile</a></li>
-
+                                    class="dropdown-item" href="/admin/profile">Hồ sơ</a></li>
                             <li th:if="${user.role=='ROLE_USER'}"><a
-                                    class="dropdown-item" href="/user/user-orders">My Orders</a></li>
-                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                    class="dropdown-item" href="/user/user-orders">Đơn hàng của tôi</a></li>
+                            <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
                             <li th:if="${user.role=='ROLE_ADMIN'}"><a
-                                    class="dropdown-item" href="/admin/user-orders">My Orders</a></li>
-                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                    class="dropdown-item" href="/admin/user-orders">Đơn hàng của tôi</a></li>
+                            <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -124,16 +123,16 @@
 </nav>
 <div class="container mt-5">
     <br>
-    <h2>Statistics per Month</h2>
+    <h2>Thống Kê Theo Tháng</h2>
     <!-- Dropdown to select year -->
-    <label for="yearSelect">Select Year:</label>
+    <label for="yearSelect">Chọn Năm:</label>
     <select id="yearSelect" class="form-control">
         <option value="2023">2023</option>
         <option value="2024">2024</option>
         <option value="2025">2025</option>
     </select>
     <!-- Total price display -->
-    <p id="totalPrice" class="mt-3">Total Price: $0</p>
+    <p id="totalPrice" class="mt-3">Tổng Giá: $0</p>
     <!-- Chart -->
     <canvas id="monthStatisticsChart" width="20" height="10"></canvas>
 </div>
