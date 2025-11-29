@@ -23,6 +23,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 
 import book.ecom.service.CartService;
 import book.ecom.service.CategoryService;
@@ -635,6 +637,17 @@ public class AdminController {
     @GetMapping("/add-admin")
     public String loadAdminAdd() {
         return "/admin/add_admin";
+    }
+
+    // Email availability check for admin/user forms
+    @GetMapping(value = "/check-email", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Map<String, Object> checkEmailExists(@RequestParam("email") String email) {
+        UserDtls existing = userService.getUserByEmail(email);
+        boolean exists = existing != null;
+        Map<String, Object> result = new HashMap<>();
+        result.put("exists", exists);
+        return result;
     }
 
     @PostMapping("/save-admin")
