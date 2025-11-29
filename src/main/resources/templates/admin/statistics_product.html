@@ -27,26 +27,26 @@
         <th:block th:if="${user==null}">
           <li class="nav-item"><a class="nav-link active"
                                   aria-current="page" href="/"><i class="fa-solid fa-house"></i>
-            Home</a></li>
+            Trang chủ</a></li>
         </th:block>
 
         <th:block th:unless="${user==null}">
           <li class="nav-item" th:if="${user.role=='ROLE_ADMIN'}"><a
                   class="nav-link active" aria-current="page" href="/admin/"><i
-                  class="fa-solid fa-house"></i> Home</a></li>
+                  class="fa-solid fa-house"></i> Trang chủ</a></li>
 
           <li class="nav-item" th:if="${user.role=='ROLE_USER'}"><a
                   class="nav-link active" aria-current="page" href="/"><i
-                  class="fa-solid fa-house"></i> Home</a></li>
+                  class="fa-solid fa-house"></i> Trang chủ</a></li>
         </th:block>
 
 
         <li class="nav-item"><a class="nav-link active"
-                                aria-current="page" href="/products">Product</a></li>
+                                aria-current="page" href="/products">Sản phẩm</a></li>
 
         <li class="nav-item dropdown"><a
                 class="nav-link dropdown-toggle" href="#" role="button"
-                data-bs-toggle="dropdown" aria-expanded="false"> Category </a>
+                data-bs-toggle="dropdown" aria-expanded="false"> Danh mục </a>
           <ul class="dropdown-menu">
             <li th:each="c:${categorys}"><a class="dropdown-item"
                                             th:href="@{'/products?category='+${c.name}}">[[${c.name}]]</a>
@@ -61,9 +61,9 @@
         <th:block th:if="${user==null}">
           <li class="nav-item"><a class="nav-link active"
                                   aria-current="page" href="/signin"><i
-                  class="fa-solid fa-right-to-bracket"></i> LOGIN</a></li>
+                  class="fa-solid fa-right-to-bracket"></i> ĐĂNG NHẬP</a></li>
           <li class="nav-item"><a class="nav-link active"
-                                  aria-current="page" href="/register">REGISTER</a></li>
+                                  aria-current="page" href="/register">ĐĂNG KÝ</a></li>
 
 
         </th:block>
@@ -88,17 +88,17 @@
           </a>
             <ul class="dropdown-menu">
               <li th:if="${user.role=='ROLE_USER'}"><a
-                      class="dropdown-item" href="/user/profile">Profile</a></li>
+                      class="dropdown-item" href="/user/profile">Hồ sơ</a></li>
 
               <li th:if="${user.role=='ROLE_ADMIN'}"><a
-                      class="dropdown-item" href="/admin/profile">Profile</a></li>
+                      class="dropdown-item" href="/admin/profile">Hồ sơ</a></li>
 
               <li th:if="${user.role=='ROLE_USER'}"><a
-                      class="dropdown-item" href="/user/user-orders">My Orders</a></li>
-              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                      class="dropdown-item" href="/user/user-orders">Đơn hàng của tôi</a></li>
+              <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
               <li th:if="${user.role=='ROLE_ADMIN'}"><a
-                      class="dropdown-item" href="/admin/user-orders">My Orders</a></li>
-              <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                      class="dropdown-item" href="/admin/user-orders">Đơn hàng của tôi</a></li>
+              <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
@@ -118,18 +118,18 @@
 </nav>
 <div class="container mt-5">
   <br>
-  <h2>Top Products Statistics</h2>
+  <h2>Thống Kê Sản Phẩm Bán Chạy</h2>
   <div class="row mb-3">
     <div class="col-md-3">
-      <label for="startDate" class="form-label">Start Date</label>
+      <label for="startDate" class="form-label">Ngày bắt đầu</label>
       <input type="date" id="startDate" class="form-control">
     </div>
     <div class="col-md-3">
-      <label for="endDate" class="form-label">End Date</label>
+      <label for="endDate" class="form-label">Ngày kết thúc</label>
       <input type="date" id="endDate" class="form-control">
     </div>
     <div class="col-md-3 align-self-end">
-      <button id="updateChartButton" class="btn btn-primary">Update Chart</button>
+      <button id="updateChartButton" class="btn btn-primary">Cập nhật biểu đồ</button>
     </div>
   </div>
   <canvas id="topProductsChart"></canvas>

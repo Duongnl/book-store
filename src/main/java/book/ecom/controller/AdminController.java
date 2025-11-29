@@ -563,7 +563,7 @@ public class AdminController {
             session.setAttribute("succMsg", "Order quantity updated");
         }
 
-        return "redirect:/admin/order_detail/" + id;
+        return "redirect:/admin/order/" + id;
     }
 
     @PostMapping("/update-order-status")
