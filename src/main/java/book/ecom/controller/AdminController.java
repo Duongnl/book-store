@@ -378,11 +378,6 @@ public class AdminController {
         return "/admin/users";
     }
 
-    @GetMapping("/addUser")
-    public String loadAddUser(@RequestParam(name = "type", defaultValue = "1") Integer userType, Model m) {
-        m.addAttribute("userType", userType);
-        return "/admin/add_user";
-    }
 
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute UserDtls user, @RequestParam("file") MultipartFile file, HttpSession session)
@@ -466,7 +461,6 @@ public class AdminController {
                 updateUser = userService.getUserById(old.getId());
             }
         }
-
         if (!ObjectUtils.isEmpty(updateUser)) {
             if (!file.isEmpty()) {
                 File saveFile = new ClassPathResource("static/img").getFile();
@@ -481,8 +475,7 @@ public class AdminController {
             session.setAttribute("errorMsg", "Something wrong on server");
         }
 
-        Integer t = "ROLE_ADMIN".equals(updateUser.getRole()) ? 2 : 1;
-        return "redirect:/admin/editUser/" + user.getId() + "?type=" + t;
+        return "redirect:/admin/editUser/" + user.getId() + "?type=" + 1;
     }
 
     @GetMapping("/deleteUser/{id}")
