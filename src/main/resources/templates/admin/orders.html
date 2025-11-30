@@ -216,15 +216,7 @@
                                             <option value="5">Đã giao</option>
                                             <option value="6">Đã hủy</option>
                                         </select>
-                                        <button class="btn btn-sm btn-primary" type="submit" th:disabled="${orderDtls.status == 'Cancelled' || orderDtls.status == 'Delivered'}">Cập nhật</button>
-                                    </div>
-                                </form>
-
-                                <form action="/admin/update-order-quantity" method="post">
-                                    <input type="hidden" name="id" th:value="${orderDtls.id}" />
-                                    <div class="d-flex gap-2 mt-2 align-items-center">
-                                        <input type="number" min="1" name="newQty" class="form-control" th:value="${orderDtls.quantity}" th:disabled="${orderDtls.status == 'Cancelled' || orderDtls.status == 'Delivered' || orderDtls.status == 'Success'}" style="max-width:120px;" />
-                                        <button class="btn btn-sm btn-outline-primary" type="submit" th:disabled="${orderDtls.status == 'Cancelled' || orderDtls.status == 'Delivered' || orderDtls.status == 'Success'}">Cập nhật số lượng</button>
+                                        <button class="btn btn-sm btn-primary" type="submit" >Cập nhật</button>
                                     </div>
                                 </form>
                             </td>

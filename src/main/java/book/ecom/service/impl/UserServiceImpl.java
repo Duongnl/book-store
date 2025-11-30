@@ -120,6 +120,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDtls updateUser(UserDtls user) {
+		if(existsEmail(user.getEmail())) return null;
 		return userRepository.save(user);
 	}
 
@@ -162,6 +163,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDtls saveAdmin(UserDtls user) {
+		if(existsEmail(user.getEmail())) return null;
+		if(ObjectUtils.isEmpty(user.getEmail()) || ObjectUtils.isEmpty(user.getPassword()) || ObjectUtils.isEmpty(user.getName())) {
+			return null;
+		}
 		user.setRole("ROLE_ADMIN");
 		user.setIsEnable(true);
 		user.setAccountNonLocked(true);
